@@ -40,3 +40,28 @@ export const registerUser = async (req: Request, res: Response) => {
     throw new Error(error);
   }
 };
+
+export const getUser = async (req: Request, res: Response) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      res.status(400).json({
+        message: "Please don't leave any fields empty",
+      });
+      throw new Error("Please don't leave any fields empty");
+    }
+
+    const findUser = await User.findOne({ email });
+
+    if (findUser) {
+      console.log(findUser);
+      res.status(200).json({
+        findUser,
+      });
+    }
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error);
+  }
+};
