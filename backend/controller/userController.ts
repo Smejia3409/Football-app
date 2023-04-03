@@ -1,6 +1,14 @@
 import User from "../model/userModel";
 import { IUser } from "../model/modelInterfaces";
 import { Request, Response } from "express";
+import bcrypt from "bcrypt";
+import jwt, { Secret } from "jsonwebtoken";
+import { ObjectId } from "mongoose";
+import * as dotenv from "dotenv";
+
+dotenv.config({ path: ".env" });
+
+// const jwt_pass: Secret = process.env.JWT_SECRET;
 
 export const registerUser = async (req: Request, res: Response) => {
   try {
@@ -22,16 +30,24 @@ export const registerUser = async (req: Request, res: Response) => {
       throw new Error("User with this email already exists");
     }
 
-    await User.create<IUser>({
+    //hash password
+    //encrypts password user enters
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const user: any = await User.create<IUser>({
       firstName: firstName,
       lastName: lastName,
       email: email,
-      password: password,
+      password: hashedPassword,
     });
 
-    res.status(200).json({
-      message: "User created",
-    });
+    if (user) {
+      res.status(200).json({
+        message: "User created",
+        token: generateToken(user._id),
+      });
+    }
 
     console.log("User has been created");
   } catch (error: any) {
@@ -43,7 +59,7 @@ export const registerUser = async (req: Request, res: Response) => {
 
 export const getUser = async (req: Request, res: Response) => {
   try {
-    const { email } = req.body;
+    const { email, password } = req.body;
 
     if (!email) {
       res.status(400).json({
@@ -52,16 +68,26 @@ export const getUser = async (req: Request, res: Response) => {
       throw new Error("Please don't leave any fields empty");
     }
 
-    const findUser = await User.findOne({ email });
+    const user: any = await User.findOne({ email });
 
-    if (findUser) {
-      console.log(findUser);
+    if (user && (await bcrypt.compare(password, user.password))) {
       res.status(200).json({
-        findUser,
+        username: user.email,
+        token: generateToken(user._id),
+      });
+    } else {
+      res.status(200).json({
+        message: "Invaild credientials, please try again",
       });
     }
   } catch (error: any) {
     console.log(error);
     throw new Error(error);
   }
+};
+
+const generateToken = (id: ObjectId) => {
+  return jwt.sign({ id }, "test123", {
+    expiresIn: "30d",
+  });
 };
