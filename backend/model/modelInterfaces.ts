@@ -4,3 +4,9 @@ export interface IUser {
   email: string;
   password: string;
 }
+
+export interface Ifield {
+  name: string;
+  lat: string;
+  long: string;
+}
