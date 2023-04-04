@@ -10,3 +10,12 @@ export interface Ifield {
   lat: string;
   long: string;
 }
+
+export interface IEvents {
+  event: string;
+  field: string;
+  date: Date;
+  time: Date;
+  description: string;
+  attending: [any];
+}
