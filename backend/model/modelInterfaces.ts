@@ -11,11 +11,11 @@ export interface Ifield {
   long: string;
 }
 
-export interface IEvents {
+export interface IEvent {
   event: string;
   field: string;
-  date: Date;
-  time: Date;
+  date: string;
+  time: string;
   description: string;
-  attending: [any];
+  attending: [];
 }

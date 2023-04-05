@@ -1,12 +1,19 @@
 import mongoose, { Schema, model, connect } from "mongoose";
 
-import { IEvents } from "./modelInterfaces";
+import { IEvent } from "./modelInterfaces";
 
-const event = new Schema<IEvents>({
-  event: { type: String, required: true },
-  field: { type: String, required: true },
-  date: { type: Date, required: true },
-  time: { type: Date, required: true },
-  description: { type: String, required: false },
-  attending: { type: [String] },
-});
+const eventModel = new Schema<IEvent>(
+  {
+    event: { type: String, required: true },
+    field: { type: String, required: true },
+    date: { type: String, required: true },
+    time: { type: String, required: true },
+    description: { type: String, required: false },
+    attending: { type: [] },
+  },
+  { timestamps: true }
+);
+
+const Event = mongoose.model<IEvent>("Event", eventModel);
+
+export default Event;
