@@ -34,3 +34,32 @@ export const createEvent = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const deleteEvent = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+
+    if (!id) {
+      res.status(400).json({
+        message: "Missing field id",
+      });
+      throw new Error("Missing field id");
+    }
+
+    const event = await Event.findByIdAndDelete(id);
+
+    if (event) {
+      res.status(200).json({
+        message: "Event deleted",
+      });
+    } else {
+      res.status(400).json({
+        message: "Event dosent exists",
+      });
+    }
+  } catch (error) {
+    res.status(400).json({
+      error,
+    });
+  }
+};
