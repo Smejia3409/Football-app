@@ -10,6 +10,7 @@ const eventModel = new Schema<IEvent>(
     time: { type: String, required: true },
     description: { type: String, required: false },
     attending: { type: [] },
+    host: { type: String, equired: true },
   },
   { timestamps: true }
 );

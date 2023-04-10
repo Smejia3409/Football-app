@@ -18,4 +18,5 @@ export interface IEvent {
   time: string;
   description: string;
   attending: [];
+  host: string;
 }

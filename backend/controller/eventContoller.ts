@@ -1,6 +1,7 @@
 import Event from "../model/eventModel";
 import { IEvent } from "../model/modelInterfaces";
 import { Response, Request } from "express";
+import { getUser } from "./userController";
 
 export const createEvent = async (req: Request, res: Response) => {
   try {
@@ -21,6 +22,7 @@ export const createEvent = async (req: Request, res: Response) => {
       time: time,
       description: description,
       attending: [],
+      host: "",
     });
 
     res.status(201).json({
