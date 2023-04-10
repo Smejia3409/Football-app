@@ -86,6 +86,14 @@ export const login = async (req: Request, res: Response) => {
   }
 };
 
+export const getUser = async (req: any, res: Response) => {
+  try {
+    res.status(200).json(req.user);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const generateToken = (id: ObjectId) => {
   return jwt.sign({ id }, "test123", {
     expiresIn: "30d",
