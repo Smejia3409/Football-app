@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import axios from "axios";
 
@@ -19,15 +19,15 @@ const Login = () => {
 
     e.preventDefault();
 
+    console.log(credentials);
+
     try {
       const login = await axios.post(
-        "http//localhost:5000/user/login",
+        "http://localhost:5000/user/login",
         credentials
       );
 
-      if (!login) {
-        console.log("login error");
-      }
+      console.log(login);
 
       console.log("login successful");
     } catch (error) {
@@ -35,16 +35,34 @@ const Login = () => {
     }
   };
 
+  useEffect(() => {
+    console.log(email, password);
+  }, [email, password]);
+
   return (
     <div>
-      <p>Login hello</p>
+      <p>Login hello world</p>
       <Form onSubmit={loginHandler}>
         <Form.Group controlId="email">
-          <Form.Control type="email" placeholder="Email" />
+          <Form.Control
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(event: any) => {
+              setEmail(event.target.value);
+            }}
+          />
         </Form.Group>
 
         <Form.Group controlId="password">
-          <Form.Control type="password" placeholder="Password" />
+          <Form.Control
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(event: any) => {
+              setPassword(event.target.value);
+            }}
+          />
         </Form.Group>
 
         <Button type="submit">Login</Button>
