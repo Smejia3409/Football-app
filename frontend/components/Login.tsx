@@ -27,7 +27,7 @@ const Login = () => {
         credentials
       );
 
-      console.log(login);
+      console.log(login.data);
 
       console.log("login successful");
     } catch (error) {

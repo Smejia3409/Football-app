@@ -11,10 +11,6 @@ connectDb();
 app.use(json());
 app.use(urlencoded({ extended: false }));
 
-app.use("/user", userRouter);
-app.use("/field", fieldRouter);
-app.use("/event", eventRouter);
-
 const options: cors.CorsOptions = {
   allowedHeaders: [
     "Origin",
@@ -36,5 +32,9 @@ app.use(cors(options));
 
 //enable pre-flight
 app.options("*", cors(options));
+
+app.use("/user", userRouter);
+app.use("/field", fieldRouter);
+app.use("/event", eventRouter);
 
 app.listen(5000, () => console.log("server is running"));
