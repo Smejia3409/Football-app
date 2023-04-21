@@ -35,38 +35,43 @@ const Login = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(email, password);
-  }, [email, password]);
+  useEffect(() => {}, [email, password]);
 
   return (
-    <div>
-      <p>Login hello world</p>
-      <Form onSubmit={loginHandler}>
-        <Form.Group controlId="email">
-          <Form.Control
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(event: any) => {
-              setEmail(event.target.value);
-            }}
-          />
-        </Form.Group>
+    <div className="vh-100 d-flex justify-content-center align-items-center border border-danger">
+      <div className="border border-secondry " style={{ width: "100%" }}>
+        <p className="form-header">Login</p>
+        <Form onSubmit={loginHandler}>
+          <Form.Group controlId="email">
+            <Form.Control
+              className="form-input "
+              style={{ width: "100%" }}
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setEmail(event.target.value);
+              }}
+            />
+          </Form.Group>
 
-        <Form.Group controlId="password">
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(event: any) => {
-              setPassword(event.target.value);
-            }}
-          />
-        </Form.Group>
+          <Form.Group controlId="password">
+            <Form.Control
+              className="form-input"
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setPassword(event.target.value);
+              }}
+            />
+          </Form.Group>
 
-        <Button type="submit">Login</Button>
-      </Form>
+          <Button className="form-btn" type="submit">
+            Login
+          </Button>
+        </Form>
+      </div>
     </div>
   );
 };

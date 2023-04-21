@@ -1,0 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Poltawski+Nowy&family=Roboto+Mono&display=swap");
+
+.form-header {
+  font-family: "Poltawski Nowy", serif;
+  font-family: "Roboto Mono", monospace;
+}
+
+.form-btn {
+  font-family: "Poltawski Nowy", serif;
+  font-family: "Roboto Mono", monospace;
+  font-weight: bold;
+}
