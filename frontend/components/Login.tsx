@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import axios from "axios";
-
+import { useRouter } from "next/navigation";
 const Login = () => {
   interface ICredentials {
     email: string;
@@ -10,6 +10,8 @@ const Login = () => {
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+
+  const { push } = useRouter();
 
   const loginHandler = async (e: any) => {
     const credentials: ICredentials = {
@@ -29,7 +31,11 @@ const Login = () => {
 
       console.log(login.data);
 
-      console.log("login successful");
+      if (login.data.username) {
+        console.log("login successful");
+        document.cookie = `token=${login.data.token}`;
+        push("/home");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -67,7 +73,7 @@ const Login = () => {
             />
           </Form.Group>
 
-          <Button className="form-btn" type="submit">
+          <Button className="form-btn w-100" type="submit">
             Login
           </Button>
         </Form>
