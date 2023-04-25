@@ -50,7 +50,7 @@ const Login = () => {
         <Form onSubmit={loginHandler}>
           <Form.Group controlId="email">
             <Form.Control
-              className="form-input "
+              className="form-input"
               style={{ width: "100%" }}
               type="email"
               placeholder="Email"
