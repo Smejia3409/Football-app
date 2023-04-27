@@ -1,35 +1,62 @@
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 
 const register = () => {
   interface IFormCred {
-    firstname: string;
-    lastname: string;
+    firstName: string;
+    lastName: string;
     email: string;
     password: string;
   }
 
   const [formCred, setFormCred] = useState<IFormCred>({
-    firstname: "",
-    lastname: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
   });
 
   const [formError, setFormError] = useState<string>("");
+
+  const { push } = useRouter();
+
+  const handleSumbit = async (event: any) => {
+    event.preventDefault();
+    setFormError("");
+
+    console.log(formCred);
+
+    try {
+      const register = await axios.post(
+        "http://localhost:5000/user/register",
+        formCred
+      );
+      console.log(register);
+
+      push("/");
+    } catch (error) {
+      console.log(error);
+      setFormError(
+        "An account with this email already exist, please use another email"
+      );
+    }
+  };
+
   return (
     <Container>
       <Row>
         <Col className="form" md={6}>
           <p className="form-header">Create account</p>
-          <Form>
+          <Form onSubmit={handleSumbit}>
             <Form.Group>
               <Form.Label className="form-input">Firstname</Form.Label>
               <Form.Control
                 placeholder="Firstname"
-                value={formCred.firstname}
+                value={formCred.firstName}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setFormCred({ ...formCred, firstname: e.target.value })
+                  setFormCred({ ...formCred, firstName: e.target.value })
                 }
               />
             </Form.Group>
@@ -37,11 +64,11 @@ const register = () => {
               <Form.Label className="form-input">Lastname</Form.Label>
               <Form.Control
                 placeholder="Lastname"
-                value={formCred.lastname}
+                value={formCred.lastName}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setFormCred({
                     ...formCred,
-                    lastname: e.target.value,
+                    lastName: e.target.value,
                   });
                 }}
               />
@@ -73,7 +100,9 @@ const register = () => {
               />
             </Form.Group>
             <br />
-            <Button className="form-btn">Create account</Button>
+            <Button className="form-btn" type="submit">
+              Create account
+            </Button>
             <p className="text-danger">{formError}</p>
           </Form>
         </Col>
