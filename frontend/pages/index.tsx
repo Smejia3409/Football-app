@@ -1,20 +1,37 @@
-import { Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import Login from "../components/Login";
 import Nav from "../components/Nav";
+import { useRouter } from "next/navigation";
+
 export default function Home() {
+  const router = useRouter();
+
   return (
     <>
-      <Container>
-        {/* content */}
-        <Nav />
-        <Row>
-          <Col sm={12} md={8} style={{ height: "100%" }}>
+      <Nav />
+
+      <Container className="vh-100">
+        <Row className="border border-danger">
+          <Col sm={12} md={8} className="d-flex  align-items-center ">
             <div>
-              <h2>Where would football take you?</h2>
-              <img
-                src="https://images.pexels.com/photos/1171084/pexels-photo-1171084.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                width={"100%"}
-              />
+              <h1 className="header">Where can football take you?</h1>
+              <p className="">
+                The first ever New York City Football social media ⚽️
+              </p>
+              <Row className="border border-danger">
+                <Col sm={6} md={6} lg={6}>
+                  <Button variant="success">Find a pick-up</Button>
+                </Col>
+
+                <Col sm={6} md={6} lg={6}>
+                  <Button
+                    variant="outline-success"
+                    onClick={() => router.push("/login")}
+                  >
+                    Join for free
+                  </Button>
+                </Col>
+              </Row>
             </div>
           </Col>
           <Col
@@ -23,7 +40,7 @@ export default function Home() {
             style={{ width: "100" }}
             className=" d-flex justify-content-center align-items-center "
           >
-            <Login />
+            {/* <Login /> */}
           </Col>
         </Row>
       </Container>
