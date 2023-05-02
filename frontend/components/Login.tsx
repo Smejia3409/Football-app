@@ -44,7 +44,7 @@ const Login = () => {
   useEffect(() => {}, [email, password]);
 
   return (
-    <div className="vh-100 d-flex justify-content-center align-items-center border border-danger">
+    <div className="d-flex justify-content-center align-items-center w-100">
       <div className="border border-secondry " style={{ width: "100%" }}>
         <p className="form-header">Login</p>
         <Form onSubmit={loginHandler}>
