@@ -1,5 +1,6 @@
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
+import Nav from "../components/Nav";
 
 const home = () => {
   const router = useRouter();
@@ -19,7 +20,11 @@ const home = () => {
     }
   });
 
-  return <div>home</div>;
+  return (
+    <div>
+      <Nav />
+    </div>
+  );
 };
 
 export default home;
