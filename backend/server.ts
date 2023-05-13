@@ -4,6 +4,7 @@ import { connectDb } from "./config/db";
 import { fieldRouter } from "./routes/fieldRoutes";
 import { eventRouter } from "./routes/eventRoutes";
 import cors from "cors";
+import { protect } from "./middleware/authMiddleware";
 
 const app: Application = express();
 connectDb();
@@ -18,6 +19,7 @@ const options: cors.CorsOptions = {
     "Content-Type",
     "Accept",
     "X-Access-Token",
+    "authorization",
   ],
   credentials: true,
   methods: "GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE",
@@ -33,7 +35,7 @@ app.use(cors(options));
 //enable pre-flight
 app.options("*", cors(options));
 
-app.use("/user", userRouter);
+app.use("/user", protect, userRouter);
 app.use("/field", fieldRouter);
 app.use("/event", eventRouter);
 
