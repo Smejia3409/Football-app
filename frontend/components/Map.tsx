@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+
 import {
   GoogleMap,
   Marker,
@@ -8,7 +9,7 @@ import {
 
 const Map = () => {
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyB48EYQNc8pXeMofgg5goiyX4scdMWNESI",
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
   });
 
   if (!isLoaded) return <div>loading...</div>;
@@ -24,7 +25,7 @@ const Gmap = () => {
 
   return (
     <GoogleMap
-      zoom={10}
+      zoom={11}
       center={{ lat: 40.73061, lng: -73.935242 }}
       mapContainerClassName="mapContainer"
     >
@@ -32,5 +33,8 @@ const Gmap = () => {
     </GoogleMap>
   );
 };
+
+//map markers
+const Markers = () => {};
 
 export default Map;
