@@ -19,16 +19,21 @@ const Nav = () => {
   };
 
   const getUsername = async () => {
-    let token = getCookie().token;
+    try {
+      let token = getCookie().token;
 
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
 
-    const u = await axios.get("http://localhost:5000/user/getuser", config);
+      const u = await axios.get("http://localhost:5000/user/getuser", config);
 
-    console.log(u);
-    setUserName(u.data.firstName);
+      console.log(u);
+      setUserName(u.data.firstName);
+    } catch (error) {
+      console.log(error);
+      alert("Please login again");
+    }
   };
 
   useEffect(() => {

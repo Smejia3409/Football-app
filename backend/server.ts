@@ -35,7 +35,7 @@ app.use(cors(options));
 //enable pre-flight
 app.options("*", cors(options));
 
-app.use("/user", protect, userRouter);
+app.use("/user", userRouter);
 app.use("/field", fieldRouter);
 app.use("/event", eventRouter);
 

@@ -8,8 +8,9 @@ import {
 } from "@react-google-maps/api";
 
 const Map = () => {
+  let apikey: string = process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "";
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
+    googleMapsApiKey: apikey,
   });
 
   if (!isLoaded) return <div>loading...</div>;
