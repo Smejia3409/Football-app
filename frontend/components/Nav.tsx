@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button, Container, Navbar } from "react-bootstrap";
 import { useRouter } from "next/router";
-import axios, { HeadersDefaults } from "axios";
+import axios from "axios";
+import { getCookie } from "@/cookies";
 
 const Nav = () => {
   const [cookie, setCookie] = useState<boolean>(false);
@@ -9,18 +10,9 @@ const Nav = () => {
 
   const router = useRouter();
 
-  const getCookie = () => {
-    let cookie: any = {};
-    document.cookie.split(";").forEach(function (el) {
-      let [key, value] = el.split("=");
-      cookie[key.trim()] = value;
-    });
-    return cookie;
-  };
-
   const getUsername = async () => {
     try {
-      let token = getCookie().token;
+      let token = getCookie();
 
       const config = {
         headers: { Authorization: `Bearer ${token}` },
@@ -32,7 +24,6 @@ const Nav = () => {
       setUserName(u.data.firstName);
     } catch (error) {
       console.log(error);
-      alert("Please login again");
     }
   };
 
@@ -40,7 +31,6 @@ const Nav = () => {
     if (getCookie()) {
       setCookie(true);
       getUsername();
-      console.log(userName);
     }
   }, [cookie, userName]);
 
