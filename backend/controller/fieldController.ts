@@ -53,5 +53,6 @@ export const getFields = async (req: Request, res: Response) => {
     res.status(200).json(fields);
   } catch (error) {
     console.log(error);
+    res.status(400).json(error);
   }
 };

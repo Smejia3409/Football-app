@@ -5,8 +5,16 @@ import { Col, Row } from "react-bootstrap";
 import Map from "@/components/Map";
 import { getCookie } from "@/cookies";
 
-const home = () => {
+interface IField {
+  name: string;
+  lat: string;
+  lng: string;
+}
+
+const home = (data: IField[]) => {
   const router = useRouter();
+
+  console.log(data);
 
   useEffect(() => {
     if (!getCookie()) {
@@ -30,5 +38,20 @@ const home = () => {
     </div>
   );
 };
+
+export async function getServerSideProps() {
+  const res = await fetch("http://localhost:5000/field/getFields");
+  const data = await res.json();
+  if (!data) {
+    return {
+      notFound: true,
+    };
+  }
+  console.log(data);
+
+  return {
+    props: { data }, // will be passed to the page component as props
+  };
+}
 
 export default home;
