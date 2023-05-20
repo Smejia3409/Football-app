@@ -20,7 +20,6 @@ const Nav = () => {
 
       const u = await axios.get("http://localhost:5000/user/getuser", config);
 
-      console.log(u);
       setUserName(u.data.firstName);
     } catch (error) {
       console.log(error);

@@ -6,8 +6,16 @@ import {
   useJsApiLoader,
   useLoadScript,
 } from "@react-google-maps/api";
+import mongoose from "mongoose";
 
-const Map = () => {
+interface IField {
+  _id: mongoose.ObjectId;
+  name: string;
+  lat: string;
+  lng: string;
+}
+
+const Map = (props: { fields: IField[] }) => {
   let apikey: string = process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "";
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: apikey,
@@ -16,13 +24,14 @@ const Map = () => {
   if (!isLoaded) return <div>loading...</div>;
   return (
     <div>
-      <Gmap />
+      <Gmap fields={props.fields} />
     </div>
   );
 };
 
-const Gmap = () => {
+const Gmap = (props: { fields: IField[] }) => {
   const center = useMemo(() => ({ lat: 40.73061, lng: -73.935242 }), []);
+  const fields = props.fields;
 
   return (
     <GoogleMap
@@ -32,6 +41,16 @@ const Gmap = () => {
     >
       {/* <Marker position={center} /> */}
       {/* <MapMarkers lat={40.73061} lng={-73.935242} /> */}
+
+      {fields.map((field: IField) => {
+        return (
+          <MapMarkers
+            key={field._id.toString()}
+            lat={Number(field.lat)}
+            lng={Number(field.lng)}
+          />
+        );
+      })}
     </GoogleMap>
   );
 };

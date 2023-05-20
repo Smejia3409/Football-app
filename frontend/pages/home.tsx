@@ -4,17 +4,22 @@ import Nav from "../components/Nav";
 import { Col, Row } from "react-bootstrap";
 import Map from "@/components/Map";
 import { getCookie } from "@/cookies";
+import mongoose from "mongoose";
 
 interface IField {
+  _id: mongoose.ObjectId;
   name: string;
   lat: string;
   lng: string;
 }
 
-const home = (data: IField[]) => {
-  const router = useRouter();
+//interface to handle data json format
+interface IDataJson {
+  data: IField[];
+}
 
-  console.log(data);
+const home = (data: IDataJson) => {
+  const router = useRouter();
 
   useEffect(() => {
     if (!getCookie()) {
@@ -28,7 +33,7 @@ const home = (data: IField[]) => {
 
       <Row className="h-100">
         <Col md={8} className="border border-danger">
-          <Map />
+          <Map fields={data.data} />
         </Col>
 
         <Col md={4} className="border border-success">
@@ -41,14 +46,12 @@ const home = (data: IField[]) => {
 
 export async function getServerSideProps() {
   const res = await fetch("http://localhost:5000/field/getFields");
-  const data = await res.json();
+  let data = await res.json();
   if (!data) {
     return {
       notFound: true,
     };
   }
-  console.log(data);
-
   return {
     props: { data }, // will be passed to the page component as props
   };
