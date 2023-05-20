@@ -1,6 +1,7 @@
 import Field from "../model/fieldModel";
 import { Response, Request } from "express";
 import { Ifield } from "../model/modelInterfaces";
+import mongoose from "mongoose";
 
 export const addField = async (req: Request, res: Response) => {
   try {
@@ -43,5 +44,14 @@ export const addField = async (req: Request, res: Response) => {
     console.log(error);
 
     throw new Error(error);
+  }
+};
+
+export const getFields = async (req: Request, res: Response) => {
+  try {
+    const fields = await Field.find();
+    res.status(200).json(fields);
+  } catch (error) {
+    console.log(error);
   }
 };

@@ -43,4 +43,8 @@ const MapMarkers = (props: { lat: any; lng: any }) => {
   return <MarkerF position={center} />;
 };
 
+export async function getServerSideProps() {
+  const res = "";
+}
+
 export default Map;
