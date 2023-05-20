@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 
 import {
   GoogleMap,
-  Marker,
+  MarkerF,
   useJsApiLoader,
   useLoadScript,
 } from "@react-google-maps/api";
@@ -30,12 +30,17 @@ const Gmap = () => {
       center={{ lat: 40.73061, lng: -73.935242 }}
       mapContainerClassName="mapContainer"
     >
-      <Marker position={center} />
+      {/* <Marker position={center} /> */}
+      {/* <MapMarkers lat={40.73061} lng={-73.935242} /> */}
     </GoogleMap>
   );
 };
 
 //map markers
-const Markers = () => {};
+const MapMarkers = (props: { lat: any; lng: any }) => {
+  const center = useMemo(() => ({ lat: props.lat, lng: props.lng }), []);
+
+  return <MarkerF position={center} />;
+};
 
 export default Map;
