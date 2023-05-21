@@ -6,6 +6,7 @@ import Map from "@/components/Map";
 import { getCookie } from "@/cookies";
 import mongoose from "mongoose";
 import { IField } from "@/types";
+import FieldList from "@/components/FieldList";
 
 //interface to handle data json format
 interface IDataJson {
@@ -31,7 +32,8 @@ const home = (data: IDataJson) => {
         </Col>
 
         <Col md={4} className="border border-success">
-          field list
+          <p>Fields</p>
+          <FieldList fields={data.data} />
         </Col>
       </Row>
     </div>
