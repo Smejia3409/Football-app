@@ -5,13 +5,7 @@ import { Col, Row } from "react-bootstrap";
 import Map from "@/components/Map";
 import { getCookie } from "@/cookies";
 import mongoose from "mongoose";
-
-interface IField {
-  _id: mongoose.ObjectId;
-  name: string;
-  lat: string;
-  lng: string;
-}
+import { IField } from "@/types";
 
 //interface to handle data json format
 interface IDataJson {
