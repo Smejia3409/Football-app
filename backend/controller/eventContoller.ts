@@ -65,3 +65,12 @@ export const deleteEvent = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const getEvents = async (req: Request, res: Response) => {
+  try {
+    const events = await Event.find();
+    res.status(200).json(events);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
