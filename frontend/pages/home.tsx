@@ -5,12 +5,14 @@ import { Col, Row } from "react-bootstrap";
 import Map from "@/components/Map";
 import { getCookie } from "@/cookies";
 import mongoose from "mongoose";
-import { IField } from "@/types";
+import { IEvent, IField } from "@/types";
 import FieldList from "@/components/FieldList";
+import axios from "axios";
 
 //interface to handle data json format
 interface IDataJson {
   data: IField[];
+  eventData: IEvent[];
 }
 
 const home = (data: IDataJson) => {
@@ -20,6 +22,8 @@ const home = (data: IDataJson) => {
     if (!getCookie()) {
       router.push("/");
     }
+
+    console.log(data);
   });
 
   return (
@@ -33,7 +37,7 @@ const home = (data: IDataJson) => {
 
         <Col md={4} className="border border-success">
           <p>Fields</p>
-          <FieldList fields={data.data} />
+          <FieldList fields={data.data} events={data.eventData} />
         </Col>
       </Row>
     </div>
@@ -41,15 +45,19 @@ const home = (data: IDataJson) => {
 };
 
 export async function getServerSideProps() {
-  const res = await fetch("http://localhost:5000/field/getFields");
-  let data = await res.json();
+  const fieldsRes = await fetch("http://localhost:5000/field/getFields");
+  const eventsRes = await fetch("http://localhost:5000/event/getEvents");
+
+  let data = await fieldsRes.json();
+  let eventData = await eventsRes.json();
+
   if (!data) {
     return {
       notFound: true,
     };
   }
   return {
-    props: { data }, // will be passed to the page component as props
+    props: { data, eventData }, // will be passed to the page component as props
   };
 }
 
