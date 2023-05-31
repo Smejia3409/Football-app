@@ -33,15 +33,13 @@ const Gmap = (props: { fields: IField[] }) => {
       center={{ lat: 40.73061, lng: -73.935242 }}
       mapContainerClassName="mapContainer"
     >
-      {/* <Marker position={center} /> */}
-      {/* <MapMarkers lat={40.73061} lng={-73.935242} /> */}
-
       {fields.map((field: IField) => {
         return (
           <MapMarkers
             key={field._id.toString()}
             lat={Number(field.lat)}
             lng={Number(field.lng)}
+            name={field.name}
           />
         );
       })}
@@ -50,10 +48,14 @@ const Gmap = (props: { fields: IField[] }) => {
 };
 
 //map markers
-const MapMarkers = (props: { lat: any; lng: any }) => {
+const MapMarkers = (props: { lat: any; lng: any; name: string }) => {
   const center = useMemo(() => ({ lat: props.lat, lng: props.lng }), []);
 
-  return <MarkerF position={center} />;
+  const getField = () => {
+    console.log(props.name);
+  };
+
+  return <MarkerF position={center} onClick={getField} />;
 };
 
 export default Map;

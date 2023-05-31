@@ -5,28 +5,18 @@ import { Accordion, Button, Card, Collapse, ListGroup } from "react-bootstrap";
 const FieldList = (props: { fields: IField[]; events: IEvent[] }) => {
   let fields = props.fields;
 
-  const [open, setOpen] = useState<boolean>(false);
-
   return (
-    <ListGroup>
+    <ListGroup className="listgroup">
       {fields.map((field: IField) => {
         return (
           <Accordion
             key={field._id.toString()}
             id={field._id.toString()}
             defaultActiveKey="0"
-            // onClick={() => {
-            //   if (field._id) {
-            //     field._id.toString();
-            //   }
-            // }}
-            // aria-controls="example-collapse-text"
-            // aria-expanded={open}
-            // variant="light"
           >
             <Accordion.Header>{field.name}</Accordion.Header>
 
-            <SelectedField events={props.events} open={open} />
+            <SelectedField events={props.events} />
 
             <br />
           </Accordion>
@@ -36,7 +26,7 @@ const FieldList = (props: { fields: IField[]; events: IEvent[] }) => {
   );
 };
 
-const SelectedField = (props: { events: IEvent[]; open: boolean }) => {
+const SelectedField = (props: { events: IEvent[] }) => {
   return (
     <Accordion.Body>
       <div>

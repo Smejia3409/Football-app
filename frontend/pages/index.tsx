@@ -11,16 +11,23 @@ export default function Home() {
       <Nav />
 
       <Container className="vh-100">
-        <Row className="border border-danger">
+        <Row className="">
           <Col sm={12} md={8} className="d-flex  align-items-center ">
             <div>
               <h1 className="header">Where can football take you?</h1>
               <p className="">
                 The first ever New York City Football social media ⚽️
               </p>
-              <Row className="border border-danger">
+              <Row className="">
                 <Col sm={6} md={6} lg={6}>
-                  <Button variant="success">Find a pick-up</Button>
+                  <Button
+                    variant="success"
+                    onClick={() => {
+                      router.push("/home");
+                    }}
+                  >
+                    Find a pick-up
+                  </Button>
                 </Col>
 
                 <Col sm={6} md={6} lg={6}>
