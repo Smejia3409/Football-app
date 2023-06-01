@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import {
   GoogleMap,
@@ -49,13 +49,43 @@ const Gmap = (props: { fields: IField[] }) => {
 
 //map markers
 const MapMarkers = (props: { lat: any; lng: any; name: string }) => {
-  const center = useMemo(() => ({ lat: props.lat, lng: props.lng }), []);
+  interface ImyCoordinates {
+    lat: number;
+    lng: number;
+  }
 
+  const [mymarker, setMyMarker] = useState<ImyCoordinates>({
+    lat: -0,
+    lng: -0,
+  });
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        console.log(position.coords);
+        setMyMarker({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+      });
+    }
+  });
+  const center = useMemo(() => ({ lat: props.lat, lng: props.lng }), []);
   const getField = () => {
     console.log(props.name);
   };
 
-  return <MarkerF position={center} onClick={getField} />;
+  return (
+    <>
+      <MarkerF position={center} onClick={getField} />;
+      <MarkerF
+        position={{ lat: mymarker.lat, lng: mymarker.lng }}
+        title="My location"
+        icon={{
+          url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+        }}
+      />
+    </>
+  );
 };
 
 export default Map;
