@@ -8,6 +8,13 @@ const FieldList = (props: { fields: IField[]; events: IEvent[] }) => {
   return (
     <ListGroup className="listgroup">
       {fields.map((field: IField) => {
+        // finds all the events for specifc field
+        let fieldEvents: IEvent[] = props.events.filter(
+          (fieldEvent: IEvent) => {
+            return fieldEvent.field === field.name;
+          }
+        );
+
         return (
           <Accordion
             key={field._id.toString()}
@@ -16,7 +23,7 @@ const FieldList = (props: { fields: IField[]; events: IEvent[] }) => {
           >
             <Accordion.Header>{field.name}</Accordion.Header>
 
-            <SelectedField events={props.events} />
+            <SelectedField events={fieldEvents} />
 
             <br />
           </Accordion>
