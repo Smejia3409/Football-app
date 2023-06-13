@@ -61,7 +61,6 @@ const MapMarkers = (props: { lat: any; lng: any; name: string }) => {
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-        console.log(position.coords);
         setMyMarker({
           lat: position.coords.latitude,
           lng: position.coords.longitude,

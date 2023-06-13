@@ -52,4 +52,12 @@ const SelectedField = (props: { events: IEvent[] }) => {
   );
 };
 
+const FieldPage = (props: { field: string; events: IEvent }) => {
+  return (
+    <div>
+      <h3>{props.field}</h3>
+    </div>
+  );
+};
+
 export default FieldList;
