@@ -7,7 +7,7 @@ import {
   useLoadScript,
 } from "@react-google-maps/api";
 import mongoose from "mongoose";
-import { IField } from "@/types";
+import { IEvent, IField } from "@/types";
 
 const Map = (props: { fields: IField[] }) => {
   let apikey: string = process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "";
@@ -54,6 +54,8 @@ const MapMarkers = (props: { lat: any; lng: any; name: string }) => {
     lng: number;
   }
 
+  const [fieldPage, setFieldPage] = useState<boolean>(false);
+
   const [mymarker, setMyMarker] = useState<ImyCoordinates>({
     lat: -0,
     lng: -0,
@@ -71,6 +73,8 @@ const MapMarkers = (props: { lat: any; lng: any; name: string }) => {
   const center = useMemo(() => ({ lat: props.lat, lng: props.lng }), []);
   const getField = () => {
     console.log(props.name);
+    setFieldPage(!fieldPage);
+    console.log(!fieldPage);
   };
 
   return (
@@ -83,7 +87,26 @@ const MapMarkers = (props: { lat: any; lng: any; name: string }) => {
           url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
         }}
       />
+      {fieldPage && <FieldPage field={""} events={[]} />}
     </>
+  );
+};
+
+const FieldPage = (props: { field: string; events: IEvent[] }) => {
+  return (
+    <div className="w-100 h-100 border border-success">
+      <h3>{props.field}</h3>
+      <div>
+        {props.events.map((event: IEvent) => {
+          return (
+            <div>
+              <p>{event.event}</p>
+              <p>{event.time}</p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 };
 
