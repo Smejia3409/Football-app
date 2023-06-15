@@ -32,7 +32,7 @@ const home = (data: IDataJson) => {
 
       <Row className="h-100">
         <Col md={8} className="border border-danger">
-          <Map fields={data.data} />
+          <Map fields={data.data} events={data.eventData} />
         </Col>
 
         <Col md={4} className="border border-success">

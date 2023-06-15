@@ -9,21 +9,24 @@ import {
 import mongoose from "mongoose";
 import { IEvent, IField } from "@/types";
 
-const Map = (props: { fields: IField[] }) => {
+const Map = (props: { fields: IField[]; events: IEvent[] }) => {
   let apikey: string = process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "";
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: apikey,
   });
 
   if (!isLoaded) return <div>loading...</div>;
+
+  console.log(props.events);
+
   return (
     <div>
-      <Gmap fields={props.fields} />
+      <Gmap fields={props.fields} events={props.events} />
     </div>
   );
 };
 
-const Gmap = (props: { fields: IField[] }) => {
+const Gmap = (props: { fields: IField[]; events: IEvent[] }) => {
   const center = useMemo(() => ({ lat: 40.73061, lng: -73.935242 }), []);
   const fields = props.fields;
 
@@ -40,6 +43,7 @@ const Gmap = (props: { fields: IField[] }) => {
             lat={Number(field.lat)}
             lng={Number(field.lng)}
             name={field.name}
+            events={props.events}
           />
         );
       })}
@@ -48,7 +52,12 @@ const Gmap = (props: { fields: IField[] }) => {
 };
 
 //map markers
-const MapMarkers = (props: { lat: any; lng: any; name: string }) => {
+const MapMarkers = (props: {
+  lat: any;
+  lng: any;
+  name: string;
+  events: IEvent[];
+}) => {
   interface ImyCoordinates {
     lat: number;
     lng: number;
@@ -87,17 +96,25 @@ const MapMarkers = (props: { lat: any; lng: any; name: string }) => {
           url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
         }}
       />
-      {fieldPage && <FieldPage field={""} events={[]} />}
+      {fieldPage && <FieldPage field={""} events={props.events} />}
     </>
   );
 };
 
 const FieldPage = (props: { field: string; events: IEvent[] }) => {
+  let fieldEvents: IEvent[] = props.events.filter((event: IEvent) => {
+    return event.field == props.field;
+  });
+
+  useEffect(() => {
+    console.log(fieldEvents);
+  }, [fieldEvents, props.events]);
+
   return (
     <div className="w-100 h-100 border border-success">
       <h3>{props.field}</h3>
       <div>
-        {props.events.map((event: IEvent) => {
+        {fieldEvents.map((event: IEvent) => {
           return (
             <div>
               <p>{event.event}</p>
