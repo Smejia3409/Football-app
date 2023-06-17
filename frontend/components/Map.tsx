@@ -2,6 +2,8 @@ import React, { useEffect, useMemo, useState } from "react";
 
 import {
   GoogleMap,
+  InfoBoxF,
+  InfoWindowF,
   MarkerF,
   useJsApiLoader,
   useLoadScript,
@@ -63,7 +65,11 @@ const MapMarkers = (props: {
     lng: number;
   }
 
-  const [fieldPage, setFieldPage] = useState<boolean>(false);
+  const events = props.events.filter((event: IEvent) => {
+    return event.field === props.name;
+  });
+
+  const [selectedMarker, setSelectedMarker] = useState<any>(null);
 
   const [mymarker, setMyMarker] = useState<ImyCoordinates>({
     lat: -0,
@@ -80,15 +86,30 @@ const MapMarkers = (props: {
     }
   });
   const center = useMemo(() => ({ lat: props.lat, lng: props.lng }), []);
-  const getField = () => {
-    console.log(props.name);
-    setFieldPage(!fieldPage);
-    console.log(!fieldPage);
-  };
 
   return (
     <>
-      <MarkerF position={center} onClick={getField} />;
+      <MarkerF
+        position={center}
+        onClick={() => {
+          setSelectedMarker(center);
+        }}
+      />
+
+      {selectedMarker && (
+        <InfoWindowF
+          position={center}
+          onCloseClick={() => {
+            setSelectedMarker(null);
+          }}
+        >
+          <div>
+            <p>{props.name}</p>
+            <p># of events: {events.length} </p>
+          </div>
+        </InfoWindowF>
+      )}
+      {/* my location marker */}
       <MarkerF
         position={{ lat: mymarker.lat, lng: mymarker.lng }}
         title="My location"
@@ -96,35 +117,19 @@ const MapMarkers = (props: {
           url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
         }}
       />
-      {fieldPage && <FieldPage field={""} events={props.events} />}
     </>
   );
 };
 
-const FieldPage = (props: { field: string; events: IEvent[] }) => {
-  let fieldEvents: IEvent[] = props.events.filter((event: IEvent) => {
-    return event.field == props.field;
-  });
+// const FieldPage = (props: { field: string; events: IEvent[] }) => {
 
-  useEffect(() => {
-    console.log(fieldEvents);
-  }, [fieldEvents, props.events]);
+//   return (
+//     <InfoWindowF>
+//       <h3>{props.field}</h3>
+//       <p># of events: {props.events.length}</p>
 
-  return (
-    <div className="w-100 h-100 border border-success">
-      <h3>{props.field}</h3>
-      <div>
-        {fieldEvents.map((event: IEvent) => {
-          return (
-            <div>
-              <p>{event.event}</p>
-              <p>{event.time}</p>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-};
+//     </InfoWindowF>
+//   );
+// };
 
 export default Map;
