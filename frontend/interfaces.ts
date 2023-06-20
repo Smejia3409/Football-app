@@ -20,3 +20,10 @@ export interface IEvent {
   updatedAt: Date;
   __v: number;
 }
+
+export interface IUserModel {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+}

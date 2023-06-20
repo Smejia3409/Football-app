@@ -9,7 +9,7 @@ import {
   useLoadScript,
 } from "@react-google-maps/api";
 import mongoose from "mongoose";
-import { IEvent, IField } from "@/types";
+import { IEvent, IField } from "@/interfaces";
 
 const Map = (props: { fields: IField[]; events: IEvent[] }) => {
   let apikey: string = process.env.NEXT_PUBLIC_GOOGLE_API_KEY || "";

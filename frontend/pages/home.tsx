@@ -5,7 +5,7 @@ import { Col, Row } from "react-bootstrap";
 import Map from "@/components/Map";
 import { getCookie } from "@/cookies";
 import mongoose from "mongoose";
-import { IEvent, IField } from "@/types";
+import { IEvent, IField } from "@/interfaces";
 import FieldList from "@/components/FieldList";
 import axios from "axios";
 
