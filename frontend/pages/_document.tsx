@@ -1,6 +1,9 @@
-import { Html, Head, Main, NextScript } from 'next/document'
+import { connectDb } from "@/lib/db";
+import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
+  //to connect to database as soon the front end start running
+  connectDb();
   return (
     <Html lang="en">
       <Head />
@@ -9,5 +12,5 @@ export default function Document() {
         <NextScript />
       </body>
     </Html>
-  )
+  );
 }

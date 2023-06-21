@@ -1,11 +1,15 @@
 import { connectDb } from "@/lib/db";
+import { NextApiRequest, NextApiResponse } from "next";
 import User from "@/models/userModel";
+import bcrypt from "bcrypt";
+import jwt, { Secret } from "jsonwebtoken";
+import { IUserModel } from "@/interfaces";
+import { ObjectId } from "mongoose";
 
-export const registerUser = async (
-  req: NextApiRequest,
-  res: NextApiResponse
-) => {
+const registerUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
+    await connectDb();
+
     const { firstName, lastName, email, password } = req.body;
 
     if (!firstName || !lastName || !email || !password) {
@@ -29,7 +33,7 @@ export const registerUser = async (
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const user: any = await User.create<IUser>({
+    const user: any = await User.create<IUserModel>({
       firstName: firstName,
       lastName: lastName,
       email: email,
@@ -50,3 +54,76 @@ export const registerUser = async (
     throw new Error(error);
   }
 };
+
+const login = async (req: NextApiRequest, res: NextApiResponse) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email) {
+      res.status(400).json({
+        message: "Please don't leave any fields empty",
+      });
+      throw new Error("Please don't leave any fields empty");
+    }
+
+    const user: any = await User.findOne({ email });
+
+    if (user && (await bcrypt.compare(password, user.password))) {
+      res.status(200).json({
+        username: user.email,
+        token: generateToken(user._id),
+      });
+    } else {
+      res.status(200).json({
+        message: "Invaild credientials, please try again",
+      });
+    }
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error);
+  }
+};
+
+const generateToken = (id: ObjectId) => {
+  return jwt.sign({ id }, "test123", {
+    expiresIn: "30d",
+  });
+};
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  try {
+    if (req.method === "POST") {
+      //Process a POST request
+      const { email, password } = req.body;
+
+      if (!email) {
+        res.status(400).json({
+          message: "Please don't leave any fields empty",
+        });
+        throw new Error("Please don't leave any fields empty");
+      }
+
+      const user: any = await User.findOne({ email });
+
+      if (user && (await bcrypt.compare(password, user.password))) {
+        res.status(200).json({
+          username: user.email,
+          token: generateToken(user._id),
+        });
+      } else {
+        res.status(200).json({
+          message: "Invaild credientials, please try again",
+        });
+      }
+      //   login(req, res);
+    } else {
+      // Handle any other HTTP method
+      registerUser(req, res);
+    }
+  } catch (error) {
+    res.status(200).json({ error });
+  }
+}
