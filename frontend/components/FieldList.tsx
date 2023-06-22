@@ -1,4 +1,4 @@
-import { IEvent, IField } from "@/types";
+import { IEvent, IField } from "@/interfaces";
 import React, { useState } from "react";
 import { Accordion, Button, Card, Collapse, ListGroup } from "react-bootstrap";
 
