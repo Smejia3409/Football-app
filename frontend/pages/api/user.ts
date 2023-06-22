@@ -8,8 +8,6 @@ import { ObjectId } from "mongoose";
 
 const registerUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    await connectDb();
-
     const { firstName, lastName, email, password } = req.body;
 
     if (!firstName || !lastName || !email || !password) {
@@ -94,36 +92,37 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  try {
-    if (req.method === "POST") {
-      //Process a POST request
-      const { email, password } = req.body;
+  await connectDb();
 
-      if (!email) {
-        res.status(400).json({
-          message: "Please don't leave any fields empty",
-        });
-        throw new Error("Please don't leave any fields empty");
+  const { method } = req;
+
+  switch (method) {
+    case `POST`:
+      try {
+        //Process a POST request
+        const { email, password } = req.body;
+
+        if (!email) {
+          res.status(400).json({
+            message: "Please don't leave any fields empty",
+          });
+          throw new Error("Please don't leave any fields empty");
+        }
+
+        const user: any = await User.findOne({ email });
+
+        if (user && (await bcrypt.compare(password, user.password))) {
+          res.status(200).json({
+            username: user.email,
+            token: generateToken(user._id),
+          });
+        } else {
+          res.status(200).json({
+            message: "Invaild credientials, please try again",
+          });
+        }
+      } catch (error) {
+        res.status(400).json(error);
       }
-
-      const user: any = await User.findOne({ email });
-
-      if (user && (await bcrypt.compare(password, user.password))) {
-        res.status(200).json({
-          username: user.email,
-          token: generateToken(user._id),
-        });
-      } else {
-        res.status(200).json({
-          message: "Invaild credientials, please try again",
-        });
-      }
-      //   login(req, res);
-    } else {
-      // Handle any other HTTP method
-      registerUser(req, res);
-    }
-  } catch (error) {
-    res.status(200).json({ error });
   }
 }
