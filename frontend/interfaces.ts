@@ -27,3 +27,13 @@ export interface IUserModel {
   email: string;
   password: string;
 }
+
+export interface IEventModel {
+  event: string;
+  field: string;
+  date: string;
+  time: string;
+  description: string;
+  attending: [];
+  host: string;
+}
