@@ -30,7 +30,7 @@ const register = () => {
 
     try {
       const register = await axios.post(
-        "http://localhost:5000/user/register",
+        "http://localhost:3000/api/register",
         formCred
       );
       console.log(register);
