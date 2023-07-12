@@ -37,3 +37,9 @@ export interface IEventModel {
   attending: [];
   host: string;
 }
+
+export interface IFieldModel {
+  name: { type: String; required: true };
+  lat: { type: String; required: true };
+  long: { type: String; required: true };
+}

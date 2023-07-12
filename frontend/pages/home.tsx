@@ -45,8 +45,8 @@ const home = (data: IDataJson) => {
 };
 
 export async function getServerSideProps() {
-  const fieldsRes = await fetch("http://localhost:5000/field/getFields");
-  const eventsRes = await fetch("http://localhost:5000/event/getEvents");
+  const fieldsRes = await fetch("http://localhost:3000/api/field");
+  const eventsRes = await fetch("http://localhost:3000/api/event");
 
   let data = await fieldsRes.json();
   let eventData = await eventsRes.json();
