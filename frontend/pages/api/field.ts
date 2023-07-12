@@ -1,6 +1,6 @@
 import { IFieldModel } from "@/interfaces";
 import { connectDb } from "@/lib/db";
-import Field from "@/models/fieldsModel";
+import Field from "@/models/fieldModel";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(

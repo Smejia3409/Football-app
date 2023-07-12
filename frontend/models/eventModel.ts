@@ -1,6 +1,6 @@
 import { IEventModel } from "@/interfaces";
 
-import mongoose, { Schema, model, connect } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const eventModel = new Schema<IEventModel>(
   {
@@ -16,6 +16,6 @@ const eventModel = new Schema<IEventModel>(
 );
 
 const Event =
-  mongoose.model<IEventModel>("Event", eventModel) || mongoose.models.Event;
+  mongoose.models.Event || mongoose.model<IEventModel>("Event", eventModel);
 
 export default Event;
