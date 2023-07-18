@@ -20,7 +20,7 @@ const home = (data: IDataJson) => {
 
   useEffect(() => {
     if (!getCookie()) {
-      router.push("/");
+      router.push("/login");
     }
 
     console.log(data);

@@ -33,7 +33,7 @@ export default function Home() {
                 <Col sm={6} md={6} lg={6}>
                   <Button
                     variant="outline-success"
-                    onClick={() => router.push("/login")}
+                    onClick={() => router.push("/register")}
                   >
                     Join for free
                   </Button>
