@@ -97,6 +97,12 @@ export default async function handler(
   const { method } = req;
 
   switch (method) {
+    case `GET`:
+      try {
+        res.status(200).json(req);
+      } catch (error) {
+        console.log(error);
+      }
     case `POST`:
       try {
         //Process a POST request

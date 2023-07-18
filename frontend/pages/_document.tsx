@@ -1,4 +1,3 @@
-import { connectDb } from "@/lib/db";
 import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
