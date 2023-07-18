@@ -10,3 +10,7 @@
   font-family: "Roboto Mono", monospace;
   font-weight: bold;
 }
+
+.login-form {
+  width: 40vw;
+}

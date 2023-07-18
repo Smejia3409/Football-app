@@ -2,6 +2,7 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import Login from "../components/Login";
 import Nav from "../components/Nav";
 import { useRouter } from "next/navigation";
+import startpage1 from "../public/media/startpage1.jpeg";
 
 export default function Home() {
   const router = useRouter();
@@ -12,7 +13,7 @@ export default function Home() {
 
       <Container className="vh-100">
         <Row className="">
-          <Col sm={12} md={8} className="d-flex  align-items-center ">
+          <Col sm={12} md={6} className="d-flex  align-items-center ">
             <div>
               <h1 className="header">Where can football take you?</h1>
               <p className="">
@@ -43,11 +44,16 @@ export default function Home() {
           </Col>
           <Col
             sm={12}
-            md={4}
+            md={6}
             style={{ width: "100" }}
-            className=" d-flex justify-content-center align-items-center "
+            className=" d-flex justify-content-center align-items-center border border-danger"
           >
             {/* <Login /> */}
+            <img
+              src="https://images.pexels.com/photos/2935982/pexels-photo-2935982.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+              alt=""
+              style={{ width: "100%", height: "100%" }}
+            />
           </Col>
         </Row>
       </Container>
