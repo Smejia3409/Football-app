@@ -3,6 +3,7 @@ import { Form, Button, Container } from "react-bootstrap";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { LoadingScreen } from "./Loading";
+import { emptyStr } from "@/jsFunctions";
 
 const Login = () => {
   interface ICredentials {
@@ -26,7 +27,11 @@ const Login = () => {
     e.preventDefault();
     setLoad(true);
 
-    console.log(credentials);
+    if (emptyStr(credentials.email) || emptyStr(credentials.password)) {
+      setMessage("Please fill in all fields");
+      setLoad(false);
+      throw "Please fill in all fields";
+    }
 
     try {
       setLoad(true);
