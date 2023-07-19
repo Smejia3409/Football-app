@@ -1,5 +1,5 @@
-import Nav from "@/components/Nav";
-import { throws } from "assert";
+import { LoadingScreen } from "@/components/Loading";
+import { emptyStr } from "@/jsFunctions";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -28,23 +28,24 @@ const register = () => {
   const handleSumbit = async (event: any) => {
     event.preventDefault();
     setMessage("");
-
     if (
-      formCred.email == "" ||
-      formCred.firstName == "" ||
-      formCred.lastName == "" ||
-      formCred.password == ""
+      emptyStr(formCred.firstName) ||
+      emptyStr(formCred.lastName) ||
+      emptyStr(formCred.email) ||
+      emptyStr(formCred.password)
     ) {
-      setMessage(" Missing field");
-      throw "Missing field";
+      setLoad(true);
+      setMessage("Please fill in all the fields");
+      throw "Please fill in all the fields";
     }
 
     try {
+      setLoad(true);
+
       const register = await axios.post(
         "http://localhost:3000/api/register",
         formCred
       );
-
       console.log(register);
 
       push("/");
@@ -57,75 +58,73 @@ const register = () => {
   };
 
   return (
-    <>
-      <Nav />
-      <Container>
-        <Row>
-          <Col className="form" md={6}>
-            <p className="form-header">Create account</p>
-            <Form onSubmit={handleSumbit}>
-              <Form.Group>
-                <Form.Label className="form-input">Firstname</Form.Label>
-                <Form.Control
-                  placeholder="Firstname"
-                  value={formCred.firstName}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setFormCred({ ...formCred, firstName: e.target.value })
-                  }
-                />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label className="form-input">Lastname</Form.Label>
-                <Form.Control
-                  placeholder="Lastname"
-                  value={formCred.lastName}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setFormCred({
-                      ...formCred,
-                      lastName: e.target.value,
-                    });
-                  }}
-                />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label className="form-input">Email</Form.Label>
-                <Form.Control
-                  placeholder="Email"
-                  value={formCred.email}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setFormCred({
-                      ...formCred,
-                      email: e.target.value,
-                    });
-                  }}
-                />
-              </Form.Group>
-              <Form.Group>
-                <Form.Label className="form-input">Password</Form.Label>
-                <Form.Control
-                  placeholder="Password"
-                  value={formCred.password}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setFormCred({
-                      ...formCred,
-                      password: e.target.value,
-                    });
-                  }}
-                />
-              </Form.Group>
-              <br />
-              <Button className="form-btn" type="submit">
-                Create account
-              </Button>
-              <p className="text-danger">{message}</p>
-            </Form>
-          </Col>
-          <Col md={6}>
-            <img src="" alt="" />
-          </Col>
-        </Row>
-      </Container>
-    </>
+    <Container>
+      <Row>
+        <Col className="form" md={6}>
+          <p className="form-header">Create account</p>
+          <Form onSubmit={handleSumbit}>
+            <Form.Group>
+              <Form.Label className="form-input">Firstname</Form.Label>
+              <Form.Control
+                placeholder="Firstname"
+                value={formCred.firstName}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setFormCred({ ...formCred, firstName: e.target.value })
+                }
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label className="form-input">Lastname</Form.Label>
+              <Form.Control
+                placeholder="Lastname"
+                value={formCred.lastName}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setFormCred({
+                    ...formCred,
+                    lastName: e.target.value,
+                  });
+                }}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label className="form-input">Email</Form.Label>
+              <Form.Control
+                placeholder="Email"
+                type="email"
+                value={formCred.email}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setFormCred({
+                    ...formCred,
+                    email: e.target.value,
+                  });
+                }}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label className="form-input">Password</Form.Label>
+              <Form.Control
+                placeholder="Password"
+                value={formCred.password}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setFormCred({
+                    ...formCred,
+                    password: e.target.value,
+                  });
+                }}
+              />
+            </Form.Group>
+            <br />
+            <Button className="form-btn" type="submit">
+              Create account
+            </Button>
+            <p className="text-danger">{message}</p>
+          </Form>
+        </Col>
+        <Col md={6}>
+          <img src="" alt="" />
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
