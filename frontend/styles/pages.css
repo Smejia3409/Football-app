@@ -7,3 +7,34 @@
   left: 0;
   backdrop-filter: blur(10px);
 }
+
+.main-page {
+}
+
+.headings {
+  color: #c1bb87;
+}
+
+.sub-headings {
+  color: #544d72;
+}
+
+.main-sub-row {
+  background-color: #f5f6f7;
+}
+
+.dark-attention {
+  background-color: #544d72;
+  color: #f5f6f7;
+}
+
+.light-attention {
+  background-color: #a15a96;
+  color: #f5f6f7;
+}
+
+/* F5F6F7 white
+9382EF light purple
+C1BB87 mustard
+A15A96 dark pink
+544D72 dark purple */
