@@ -41,6 +41,12 @@ const Login = () => {
       );
 
       console.log(login.data);
+      if (login.data.message === "Invaild credientials, please try again") {
+        setLoad(false);
+        setMessage("Incorrect credentials, please try again");
+
+        throw new Error("Incorrect credentials, please try again");
+      }
 
       if (login.data.username) {
         console.log("login successful");
