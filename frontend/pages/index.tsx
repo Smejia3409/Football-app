@@ -8,17 +8,15 @@ export default function Home() {
   const router = useRouter();
 
   return (
-    <div className="vh-100 main-page">
+    <div className=" main-page">
       <Nav />
 
-      <Container className="border border-success ">
-        <Row className="h-100 main-sub-row ">
+      <Container className=" ">
+        <Row className="main-sub-row ">
           <Col sm={12} md={6} className="d-flex  align-items-center ">
             <div>
               <h1 className="header headings">Where can football take you?</h1>
-              <p className="sub-headings">
-                A New York City Football social media ⚽️
-              </p>
+              <p className="">A New York City Football social media ⚽️</p>
               <Row className="">
                 <Col sm={6} md={6} lg={6}>
                   <Button
@@ -46,7 +44,7 @@ export default function Home() {
             sm={12}
             md={6}
             style={{ width: "100" }}
-            className=" d-flex justify-content-center align-items-center border border-danger"
+            className=" d-flex justify-content-center align-items-center "
           >
             {/* <Login /> */}
             <img
@@ -61,47 +59,59 @@ export default function Home() {
       <br />
 
       <Container>
-        <Row>
-          <Col className="d-flex justify-content-center">
-            <Card
-              className="light-attention"
-              style={{ width: "30rem", height: "30rem" }}
-            >
-              <Card.Body>
-                <Card.Title>New Adventure</Card.Title>
-                <Card.Img
-                  variant="top"
-                  src="https://images.pexels.com/photos/1378425/pexels-photo-1378425.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                />
-                <Card.Text>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Error
-                  molestias quaerat ratione dolore reprehenderit recusandae
-                  sapiente magni dolores. Mollitia nostrum illo libero
-                  accusantium quod, aspernatur optio cumque nam voluptates
-                  soluta.
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col>
-            <Card
-              className="dark-attention"
-              style={{ width: "30rem", height: "30rem" }}
-            >
-              <Card.Body>
-                <Card.Title>Endless Memories</Card.Title>
-                <Card.Img
-                  variant="top"
-                  src="https://images.pexels.com/photos/1378425/pexels-photo-1378425.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                />
-                <Card.Text>
-                  Discover new places, meet new people, create unforgetable
-                  moments
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
+        <div className=" ">
+          <Row>
+            <Col className="d-flex justify-content-center">
+              <Card className="light-attention">
+                <Card.Body>
+                  <Card.Title>New Adventure</Card.Title>
+                  <Card.Img
+                    variant="top"
+                    src="https://images.pexels.com/photos/1378425/pexels-photo-1378425.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                  />
+                  <Card.Text className="sub-headings">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Error molestias quaerat ratione dolore reprehenderit
+                    recusandae sapiente magni dolores. Mollitia nostrum illo
+                    libero accusantium quod, aspernatur optio cumque nam
+                    voluptates soluta.
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col sm={12} md={6} lg={4}>
+              <Card className="dark-attention">
+                <Card.Body>
+                  <Card.Title>Endless Memories</Card.Title>
+                  <Card.Img
+                    variant="top"
+                    src="https://images.pexels.com/photos/1378425/pexels-photo-1378425.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                  />
+                  <Card.Text>
+                    Discover new places, meet new people, create unforgetable
+                    moments
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+
+            <Col sm={12} md={6} lg={4}>
+              <Card className="dark-attention">
+                <Card.Body>
+                  <Card.Title>Endless Memories</Card.Title>
+                  <Card.Img
+                    variant="top"
+                    src="https://images.pexels.com/photos/1378425/pexels-photo-1378425.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                  />
+                  <Card.Text>
+                    Discover new places, meet new people, create unforgetable
+                    moments
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </div>
       </Container>
     </div>
   );
